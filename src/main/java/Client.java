@@ -1,3 +1,4 @@
+import nanomsg.exceptions.IOException;
 import nanomsg.reqrep.ReqSocket;
 
 public class Client {
@@ -12,7 +13,14 @@ public class Client {
             System.out.println("Loop: 1");
             sock.send("Hello!" + 1);
             System.out.println("Loop: 2");
-            System.out.println("Received:" + sock.recvString());
+            try {
+                String receivedData = sock.recvString();
+                sock.send(receivedData);
+            } catch (IOException iox) {
+                System.err.println("nothing received");
+            }
+
+//            System.out.println("Received:" + sock.recvString());
             System.out.println("Loop: 3");
         }
     }

@@ -1,3 +1,4 @@
+import nanomsg.exceptions.IOException;
 import nanomsg.reqrep.RepSocket;
 
 public class Server {
@@ -6,8 +7,12 @@ public class Server {
         sock.bind("tcp://*:6789");
 
         while (true) {
-            byte[] receivedData = sock.recvBytes();
-            sock.send(receivedData);
+            try {
+                byte[] receivedData = sock.recvBytes();
+                sock.send(receivedData);
+            } catch (IOException iox) {
+                System.err.println("nothing received");
+            }
         }
     }
 }
