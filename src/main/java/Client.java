@@ -1,27 +1,33 @@
 import nanomsg.exceptions.IOException;
 import nanomsg.reqrep.ReqSocket;
 
-public class Client {
-    public static void main(String[] args) {
-        System.out.println("Init");
-        ReqSocket sock = new ReqSocket();
-        sock.connect("tcp://localhost:6789");
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
-        System.out.println("Starting loop");
+public class Client {
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    public static void main(String[] args) throws InterruptedException {
+        UUID client_uuid = UUID.randomUUID();
+        String metadata = "Client(" + client_uuid.toString().substring(0,3) + "): ";
+        System.out.println(metadata + "Init");
+
+        ReqSocket sock = new ReqSocket();
+        sock.connect("tcp://localhost:6791");
+        System.out.println(metadata + "Starting loop");
 
         while (true) {
-            System.out.println("Loop: 1");
-            sock.send("Hello!" + 1);
-            System.out.println("Loop: 2");
+            Thread.sleep(100);
+            sock.send("c:" + client_uuid.toString().substring(1,10) + ";time:" + dtf.format(LocalDateTime.now()));
             try {
                 String receivedData = sock.recvString();
-                sock.send(receivedData);
+                System.out.println(metadata + "Answer: " + receivedData);
+//                sock.send(receivedData);
             } catch (IOException iox) {
-                System.err.println("nothing received");
+                System.err.println(metadata + "nothing received");
             }
 
-//            System.out.println("Received:" + sock.recvString());
-            System.out.println("Loop: 3");
         }
     }
 }
