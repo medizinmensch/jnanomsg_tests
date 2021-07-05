@@ -14,7 +14,7 @@ public class Client {
         System.out.println(metadata + "Init");
 
         ReqSocket sock = new ReqSocket();
-        sock.connect("tcp://localhost:6791");
+        sock.connect("tcp://localhost:6790");
         System.out.println(metadata + "Starting loop");
 
         while (true) {

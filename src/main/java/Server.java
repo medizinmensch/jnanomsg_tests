@@ -5,7 +5,7 @@ public class Server {
     public static void main(String[] args) {
         System.out.println("Server: Init");
         RepSocket sock = new RepSocket();
-        sock.connect("tcp://127.0.0.1:6790");
+        sock.bind("tcp://*:6790");
 
         while (true) {
             try {
