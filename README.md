@@ -10,7 +10,7 @@ mvn compile
 
 # Run
 
-You will have to adapt that. Or you'll use IntelliJ.
+You might have to adapt that. 
 
 Client:
 ```
