@@ -23,7 +23,6 @@ public class Client {
             try {
                 String receivedData = sock.recvString();
                 System.out.println(metadata + "Answer: " + receivedData);
-//                sock.send(receivedData);
             } catch (IOException iox) {
                 System.err.println(metadata + "nothing received");
             }
