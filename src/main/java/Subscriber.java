@@ -1,17 +1,21 @@
 import nanomsg.exceptions.IOException;
-import nanomsg.reqrep.RepSocket;
+import nanomsg.pubsub.PubSocket;
+import nanomsg.pubsub.SubSocket;
 
-public class Server {
+public class Subscriber {
     public static void main(String[] args) {
         System.out.println("Server: Init");
-        RepSocket sock = new RepSocket();
-        sock.bind("tcp://*:6790");
+
+        SubSocket subSocket = new SubSocket();
+        subSocket.connect("tcp://localhost:10102");
+        subSocket.subscribe("/");
+
 
         while (true) {
             try {
-                String receivedData = sock.recvString();
+                String receivedData = subSocket.recvString();
                 System.out.println("Received:" + receivedData);
-                sock.send(receivedData);
+//                pubSocket.send(receivedData);
             } catch (IOException iox) {
                 System.err.println("Server: nothing received");
             }
