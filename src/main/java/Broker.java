@@ -1,25 +1,26 @@
 import nanomsg.Device;
 import nanomsg.Nanomsg;
-import nanomsg.Socket;
-import nanomsg.reqrep.RepSocket;
-import nanomsg.reqrep.ReqSocket;
+import nanomsg.pubsub.PubSocket;
+import nanomsg.pubsub.SubSocket;
 
 public class Broker {
 
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("Device: Init");
-        RepSocket s1 = new RepSocket(Nanomsg.Domain.AF_SP_RAW);
-        s1.bind("tcp://*:6791");
-        ReqSocket s2 = new ReqSocket(Nanomsg.Domain.AF_SP_RAW);
-        s2.bind("tcp://*:6790");
+        SubSocket s1 = new SubSocket(Nanomsg.Domain.AF_SP_RAW);
+        s1.bind("tcp://*:10101");
+//        s1.subscribe("/");
+        PubSocket s2 = new PubSocket(Nanomsg.Domain.AF_SP_RAW);
+        s2.bind("tcp://*:10102");
 
-        Device myDevice = new Device(s1.getFd(), s2.getFd());
+        nanomsg.Device myDevice = new nanomsg.Device(s1.getFd(), s2.getFd());
 
         System.out.println("Device: Start");
         Thread deviceThread = new Thread(myDevice);
         deviceThread.start();
 
+        System.out.println("Device: Entering the deep slumber...");
         try {
             Thread.sleep(1200000);
         } catch (InterruptedException e) {
