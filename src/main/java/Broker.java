@@ -10,7 +10,7 @@ public class Broker {
         System.out.println("Device: Init");
         SubSocket s1 = new SubSocket(Nanomsg.Domain.AF_SP_RAW);
         s1.bind("tcp://*:10101");
-//        s1.subscribe("/");
+        s1.subscribe("/");
         PubSocket s2 = new PubSocket(Nanomsg.Domain.AF_SP_RAW);
         s2.bind("tcp://*:10102");
 
