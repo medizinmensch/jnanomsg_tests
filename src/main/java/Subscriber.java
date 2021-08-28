@@ -13,7 +13,7 @@ public class Subscriber {
 
         //Init Sub Socket
         SubSocket subSocket = new SubSocket();
-        subSocket.connect("tcp://localhost:10102");
+        subSocket.connect("tcp://broker:10102");
         subSocket.subscribe("/");
 
 

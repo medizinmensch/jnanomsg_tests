@@ -20,7 +20,7 @@ public class Publisher {
 
         // Init Publish Socket
         PubSocket pubSocket = new PubSocket();
-        pubSocket.connect("tcp://localhost:10101");
+        pubSocket.connect("tcp://broker:10101");
 
         while (true) {
             Thread.sleep(500);
