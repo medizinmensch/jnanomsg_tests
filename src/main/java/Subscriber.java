@@ -1,5 +1,6 @@
+package msg;
+
 import nanomsg.exceptions.IOException;
-import nanomsg.pubsub.PubSocket;
 import nanomsg.pubsub.SubSocket;
 
 public class Subscriber {

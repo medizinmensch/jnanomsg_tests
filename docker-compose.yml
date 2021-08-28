@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  subscriber:
+    build:
+      context: .
+      target: subscriber
+    networks:
+      - msg_net
+  publisher:
+    build:
+      context: .
+      target: publisher
+    ports:
+      - 22324:22324
+    networks:
+      - msg_net
+  broker:
+    build:
+      context: .
+      target: broker
+    networks:
+      - msg_net
+networks:
+  msg_net:
+    name: msg_net

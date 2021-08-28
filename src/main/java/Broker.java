@@ -1,3 +1,5 @@
+package msg;
+
 import nanomsg.Device;
 import nanomsg.Nanomsg;
 import nanomsg.pubsub.PubSocket;
@@ -8,13 +10,13 @@ public class Broker {
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("Device: Init");
-        SubSocket s1 = new SubSocket(Nanomsg.Domain.AF_SP_RAW);
+        SubSocket s1 = new SubSocket(Nanomsg.constants.AF_SP_RAW);
         s1.bind("tcp://*:10101");
         s1.subscribe("/");
-        PubSocket s2 = new PubSocket(Nanomsg.Domain.AF_SP_RAW);
+        PubSocket s2 = new PubSocket(Nanomsg.constants.AF_SP_RAW);
         s2.bind("tcp://*:10102");
 
-        nanomsg.Device myDevice = new nanomsg.Device(s1.getFd(), s2.getFd());
+        nanomsg.Device myDevice = new nanomsg.Device(s1.getNativeSocket(), s2.getNativeSocket());
 
         System.out.println("Device: Start");
         Thread deviceThread = new Thread(myDevice);
