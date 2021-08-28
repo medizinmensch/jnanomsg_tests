@@ -13,17 +13,20 @@ public class Publisher {
         // Init
         System.out.println("Init");
         UUID client_uuid = UUID.randomUUID();
-        String metadata = "Client(" + client_uuid.toString().substring(0, 3) + "): ";
+        String metadata = "Client(" + client_uuid.toString().substring(0, 3) + ")";
+
+        // Wait a moment for the Broker
+//        Thread.sleep(1000);
 
         // Init Publish Socket
         PubSocket pubSocket = new PubSocket();
         pubSocket.connect("tcp://localhost:10101");
 
         while (true) {
-            Thread.sleep(200);
+            Thread.sleep(500);
             String msg = "/ c:" + metadata + ";time:" + dtf.format(LocalDateTime.now());
             pubSocket.send(msg);
-            System.out.println("msg send: " + msg);
+            System.out.println("msg send: <" + msg + ">");
         }
     }
 }

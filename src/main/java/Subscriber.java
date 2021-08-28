@@ -4,9 +4,14 @@ import nanomsg.exceptions.IOException;
 import nanomsg.pubsub.SubSocket;
 
 public class Subscriber {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        // Init
         System.out.println("Server: Init");
 
+        // Wait a moment for the Broker
+//        Thread.sleep(2000);
+
+        //Init Sub Socket
         SubSocket subSocket = new SubSocket();
         subSocket.connect("tcp://localhost:10102");
         subSocket.subscribe("/");
