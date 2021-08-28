@@ -1,10 +1,10 @@
-# syntax=docker/dockerfile:1.2
+# syntax=docker/dockerfile:1
 FROM maven:3.6.0-jdk-11-slim AS build
 WORKDIR /app
 
-COPY src ./src
 COPY pom.xml .
 
+COPY src ./src
 RUN mvn package
 
 FROM openjdk:11.0.11-jre-slim AS base

@@ -6,14 +6,16 @@ services:
       target: subscriber
     networks:
       - msg_net
+    depends_on:
+      - broker
   publisher:
     build:
       context: .
       target: publisher
-    ports:
-      - 22324:22324
     networks:
       - msg_net
+    depends_on:
+      - broker
   broker:
     build:
       context: .
