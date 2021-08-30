@@ -8,9 +8,6 @@ public class Subscriber {
         // Init
         System.out.println("Server: Init");
 
-        // Wait a moment for the Broker
-//        Thread.sleep(2000);
-
         //Init Sub Socket
         SubSocket subSocket = new SubSocket();
         subSocket.connect("tcp://broker:10102");
@@ -20,8 +17,7 @@ public class Subscriber {
         while (true) {
             try {
                 String receivedData = subSocket.recvString();
-                System.out.println("Received:" + receivedData);
-//                pubSocket.send(receivedData);
+                System.out.println("Received: <" + receivedData + ">");
             } catch (IOException iox) {
                 System.err.println("Server: nothing received");
             }

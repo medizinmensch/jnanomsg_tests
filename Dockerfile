@@ -3,6 +3,7 @@ FROM maven:3.6.0-jdk-11-slim AS build
 WORKDIR /app
 
 COPY pom.xml .
+RUN mvn -B dependency:resolve-plugins dependency:resolve dependency:go-offline
 
 COPY src ./src
 RUN mvn package

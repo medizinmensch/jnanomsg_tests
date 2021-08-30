@@ -15,10 +15,7 @@ public class Publisher {
         UUID client_uuid = UUID.randomUUID();
         String metadata = "Client(" + client_uuid.toString().substring(0, 3) + ")";
 
-        // Wait a moment for the Broker
-//        Thread.sleep(1000);
-
-        // Init Publish Socket
+        // Init Pub Socket
         PubSocket pubSocket = new PubSocket();
         pubSocket.connect("tcp://broker:10101");
 

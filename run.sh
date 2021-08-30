@@ -9,9 +9,9 @@ cleanup() {
   exit 1
 }
 
-java -jar ./target/subscriber-jar-with-dependencies.jar &
+java -jar ./target/broker-jar-with-dependencies.jar &
 java -jar ./target/publisher-jar-with-dependencies.jar &
-java -jar ./target/broker-jar-with-dependencies.jar
+java -jar ./target/subscriber-jar-with-dependencies.jar
 
 trap cleanup INT
 trap "exit 1" TERM

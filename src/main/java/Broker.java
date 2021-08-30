@@ -9,24 +9,21 @@ public class Broker {
 
     public static void main(String[] args) throws InterruptedException {
 
+        Thread.sleep(1000);
         System.out.println("Device: Init");
         SubSocket s1 = new SubSocket(Nanomsg.constants.AF_SP_RAW);
         s1.bind("tcp://*:10101");
-        s1.subscribe("/");
+        s1.subscribe("");
         PubSocket s2 = new PubSocket(Nanomsg.constants.AF_SP_RAW);
         s2.bind("tcp://*:10102");
 
-        nanomsg.Device myDevice = new nanomsg.Device(s1.getNativeSocket(), s2.getNativeSocket());
+        Device myDevice = new nanomsg.Device(s1.getNativeSocket(), s2.getNativeSocket());
 
         System.out.println("Device: Start");
         Thread deviceThread = new Thread(myDevice);
-        deviceThread.start();
 
         System.out.println("Device: Entering the deep slumber...");
-        try {
-            Thread.sleep(1200000);
-        } catch (InterruptedException e) {
-        }
+        deviceThread.start();
 
         System.out.println("Device: Interrupt");
         deviceThread.interrupt();
