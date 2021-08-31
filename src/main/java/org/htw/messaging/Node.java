@@ -13,22 +13,25 @@ public class Node {
     public static UUID client_uuid = UUID.randomUUID();
 
     public static void main(String[] args) {
-
+        sendBeacon("tcp://broker:10101", "tcp://broker:10102");
     }
 
-    public void sendBeacon() {
+    public static void sendBeacon(String subUri, String pubUri) {
         // Init
         System.out.println("Init");
         String metadata = "Client(" + client_uuid.toString().substring(0, 3) + ")";
 
         // Init Pub Socket
         PubSocket pubSocket = new PubSocket();
-        pubSocket.connect("tcp://broker:10101");
+        pubSocket.connect(pubUri);
 
         //Init Sub Socket
         SubSocket subSocket = new SubSocket();
-        subSocket.connect("tcp://broker:10102");
+        subSocket.connect(subUri);
         subSocket.subscribe("/");
+
+        System.out.println(String.format("%s: Sub to: %s, Pub to: %s", metadata, subUri, pubUri));
+
 
         while (true) {
             try {
