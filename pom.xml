@@ -51,6 +51,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>jnanomsg-service</finalName>
                     <archive>
                         <manifest>
                             <mainClass>org.htw.messaging.Service</mainClass>
