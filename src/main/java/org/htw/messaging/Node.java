@@ -30,7 +30,7 @@ public class Node {
         subSocket.connect(subUri);
         subSocket.subscribe("/");
 
-        System.out.println(String.format("%s: Sub to: %s, Pub to: %s", metadata, subUri, pubUri));
+        System.out.println(String.format("%s:Pub to: %s, Sub to: %s", metadata, pubUri, subUri));
 
 
         while (true) {
@@ -39,16 +39,16 @@ public class Node {
             } catch (InterruptedException e) {
             }
 
-            String msg = "/ c:" + metadata + ";time:" + dtf.format(LocalDateTime.now());
-            pubSocket.send(msg);
-            System.out.println("msg send: <" + msg + ">");
-
             try {
                 String receivedData = subSocket.recvString();
                 System.out.println("Received: <" + receivedData + ">");
             } catch (IOException iox) {
                 System.err.println("Server: nothing received");
             }
+
+            String msg = "/ c:" + metadata + ";time:" + dtf.format(LocalDateTime.now());
+            pubSocket.send(msg);
+            System.out.println("msg send: <" + msg + ">");
         }
     }
 
