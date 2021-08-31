@@ -1,4 +1,4 @@
-package msg;
+package org.htw.messaging;
 
 import nanomsg.Device;
 import nanomsg.Nanomsg;
@@ -7,9 +7,16 @@ import nanomsg.pubsub.SubSocket;
 
 public class Broker {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+        startBroker();
+    }
 
-        Thread.sleep(1000);
+    public static void startBroker() {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
         System.out.println("Device: Init");
         SubSocket s1 = new SubSocket(Nanomsg.constants.AF_SP_RAW);
         s1.bind("tcp://*:10101");
@@ -27,6 +34,5 @@ public class Broker {
 
         System.out.println("Device: Interrupt");
         deviceThread.interrupt();
-
     }
 }

@@ -1,4 +1,4 @@
-package msg;
+package org.htw.messaging;
 
 import nanomsg.pubsub.PubSocket;
 

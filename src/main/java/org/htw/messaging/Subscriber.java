@@ -1,4 +1,4 @@
-package msg;
+package org.htw.messaging;
 
 import nanomsg.exceptions.IOException;
 import nanomsg.pubsub.SubSocket;
