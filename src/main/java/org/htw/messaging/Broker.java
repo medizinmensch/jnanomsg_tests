@@ -12,11 +12,6 @@ public class Broker {
     }
 
     public static void startBroker(String subPort, String pubPort) {
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-        }
         System.out.println("Broker: Init");
         SubSocket s1 = new SubSocket(Nanomsg.constants.AF_SP_RAW);
         s1.bind("tcp://*:" + subPort);
@@ -33,13 +28,18 @@ public class Broker {
             System.out.println("Starting new Thread.");
             deviceThread = new Thread(myDevice);
             deviceThread.start();
+            sleep(300);
             while (deviceThread.isAlive()) {
                 System.out.println("Old Thread is still alive...");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                }
+                sleep(2000);
             }
+        }
+    }
+
+    public static void sleep(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
         }
     }
 
