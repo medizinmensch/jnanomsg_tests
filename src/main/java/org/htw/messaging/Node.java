@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import static org.htw.utils.Utils.sleep;
+
 public class Node {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static UUID client_uuid = UUID.randomUUID();
@@ -18,8 +20,8 @@ public class Node {
 
     public static void sendBeacon(String subUri, String pubUri) {
         // Init
-        System.out.println("Init");
         String metadata = "Client(" + client_uuid.toString().substring(0, 3) + ")";
+        System.out.println(String.format("%s: Init Client. Pub to: %s, Sub to: %s", metadata, pubUri, subUri));
 
         // Init Pub Socket
         PubSocket pubSocket = new PubSocket();
@@ -28,16 +30,11 @@ public class Node {
         //Init Sub Socket
         SubSocket subSocket = new SubSocket();
         subSocket.connect(subUri);
-        subSocket.subscribe("/");
-
-        System.out.println(String.format("%s:Pub to: %s, Sub to: %s", metadata, pubUri, subUri));
+        subSocket.subscribe("");
 
 
         while (true) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-            }
+            sleep(500);
 
             try {
                 String receivedData = subSocket.recvString();
@@ -51,5 +48,4 @@ public class Node {
             System.out.println("msg send: <" + msg + ">");
         }
     }
-
 }

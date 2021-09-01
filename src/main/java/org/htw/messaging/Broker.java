@@ -5,6 +5,8 @@ import nanomsg.Nanomsg;
 import nanomsg.pubsub.PubSocket;
 import nanomsg.pubsub.SubSocket;
 
+import static org.htw.utils.Utils.sleep;
+
 public class Broker {
 
     public static void main(String[] args) {
@@ -24,26 +26,22 @@ public class Broker {
 
         Thread deviceThread = new Thread(myDevice);
 
+        System.out.println("Starting a new thread.");
         while (true) {
-            System.out.println("Starting new Thread.");
             deviceThread = new Thread(myDevice);
             deviceThread.start();
             sleep(300);
             while (deviceThread.isAlive()) {
-                System.out.println("Old Thread is still alive...");
                 sleep(2000);
             }
+            System.out.println("Old Thread died. Starting a new one.");
         }
     }
 
-    public static void sleep(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-        }
-    }
-
-    public static void logThread(Thread deviceThread, String msg) {
-        System.out.println(msg + " Interrupted: " + deviceThread.isInterrupted() + ", Alive: " + deviceThread.isAlive());
-    }
+//    public static void sleep(long ms) {
+//        try {
+//            Thread.sleep(ms);
+//        } catch (InterruptedException e) {
+//        }
+//    }
 }
