@@ -17,7 +17,7 @@ public class Broker {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
-        System.out.println("Device: Init");
+        System.out.println("Broker: Init");
         SubSocket s1 = new SubSocket(Nanomsg.constants.AF_SP_RAW);
         s1.bind("tcp://*:" + subPort);
         s1.subscribe("");
@@ -27,13 +27,23 @@ public class Broker {
         System.out.println(String.format("Broker: Relaying from %s to %s", subPort, pubPort));
         Device myDevice = new nanomsg.Device(s1.getNativeSocket(), s2.getNativeSocket());
 
-        System.out.println("Broker: Starting device");
         Thread deviceThread = new Thread(myDevice);
 
-        System.out.println("Broker: Entering the deep slumber...");
-        deviceThread.start();
+        while (true) {
+            System.out.println("Starting new Thread.");
+            deviceThread = new Thread(myDevice);
+            deviceThread.start();
+            while (deviceThread.isAlive()) {
+                System.out.println("Old Thread is still alive...");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
 
-        System.out.println("Device: Interrupt");
-        deviceThread.interrupt();
+    public static void logThread(Thread deviceThread, String msg) {
+        System.out.println(msg + " Interrupted: " + deviceThread.isInterrupted() + ", Alive: " + deviceThread.isAlive());
     }
 }
