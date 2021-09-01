@@ -1,17 +1,9 @@
 version: "3.9"
 services:
-  subscriber:
+  node:
     build:
       context: .
-      target: subscriber
-    networks:
-      - msg_net
-    depends_on:
-      - broker
-  publisher:
-    build:
-      context: .
-      target: publisher
+      target: node
     networks:
       - msg_net
     depends_on:
