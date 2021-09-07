@@ -34,13 +34,16 @@ public class Node {
 
 
         while (true) {
-            sleep(500);
+            sleep(1200);
 
-            try {
-                String receivedData = subSocket.recvString();
-                System.out.println("Received: <" + receivedData + ">");
-            } catch (IOException iox) {
-                System.err.println("Server: nothing received");
+            while (true) {
+                try {
+                    String receivedData = subSocket.recvString(false);
+                    System.out.println("Received: <" + receivedData + ">");
+                } catch (IOException iox) {
+                    System.err.println("Received: [nothing]");
+                    break;
+                }
             }
 
             String msg = "/ c:" + metadata + ";time:" + dtf.format(LocalDateTime.now());
