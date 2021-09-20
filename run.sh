@@ -18,8 +18,3 @@ trap "exit 1" TERM
 
 cleanup
 
-
-# Subscriber -> Broker TCP/10101 ✅
-# Subscriber -> Broker TCP/10102 ✅
-# Publisher -> Broker TCP/10101 ✅
-# Publisher -> Broker TCP/10102 ✅

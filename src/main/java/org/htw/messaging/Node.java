@@ -34,14 +34,15 @@ public class Node {
 
 
         while (true) {
-            sleep(1200);
+            sleep(200);
 
             while (true) {
                 try {
                     String receivedData = subSocket.recvString(false);
+//                    String test = subSocket.re
                     System.out.println("Received: <" + receivedData + ">");
                 } catch (IOException iox) {
-                    System.err.println("Received: [nothing]");
+//                    System.err.println("Received: [nothing]");
                     break;
                 }
             }
