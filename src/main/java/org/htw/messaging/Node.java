@@ -10,29 +10,35 @@ import java.util.UUID;
 
 import static org.htw.utils.Utils.sleep;
 
-public class Node {
+public class Node implements Runnable {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static UUID client_uuid = UUID.randomUUID();
+    public String metadata;
+
+    public static SubSocket subSocket;
+    public static PubSocket pubSocket;
 
     public static void main(String[] args) {
-        sendBeacon("tcp://broker:10101", "tcp://broker:10102");
+        new Node("tcp://broker:10101", "tcp://broker:10102", "1");
     }
 
-    public static void sendBeacon(String subUri, String pubUri) {
+    public Node(String subUri, String pubUri, String id) {
         // Init
-        String metadata = "Client(" + client_uuid.toString().substring(0, 3) + ")";
+        metadata = "Client(" + id + ")";
         System.out.println(String.format("%s: Init Client. Pub to: %s, Sub to: %s", metadata, pubUri, subUri));
 
         // Init Pub Socket
-        PubSocket pubSocket = new PubSocket();
+        pubSocket = new PubSocket();
         pubSocket.connect(pubUri);
 
         //Init Sub Socket
-        SubSocket subSocket = new SubSocket();
+        subSocket = new SubSocket();
         subSocket.connect(subUri);
         subSocket.subscribe("");
+    }
 
-
+    @Override
+    public void run() {
         while (true) {
             sleep(200);
 

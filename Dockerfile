@@ -17,13 +17,10 @@ RUN apt install -y nanomsg-utils
 FROM base AS node
 WORKDIR /app
 COPY --from=build /app/target/jnanomsg-service-jar-with-dependencies.jar .
-
 ENTRYPOINT ["java","-jar","jnanomsg-service-jar-with-dependencies.jar", "--node","--subscribe-uri", "tcp://broker:10102", "--publish-uri", "tcp://broker:10101"]
-
 
 # Broker
 FROM base AS broker
 WORKDIR /app
 COPY --from=build /app/target/jnanomsg-service-jar-with-dependencies.jar .
-
 ENTRYPOINT ["java","-jar","jnanomsg-service-jar-with-dependencies.jar", "--broker", "--subscribe-port", "10101", "--publish-port", "10102"]

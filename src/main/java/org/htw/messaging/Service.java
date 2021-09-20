@@ -2,11 +2,21 @@ package org.htw.messaging;
 
 import org.apache.commons.cli.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Service {
     public static void main(String[] args) {
 
         Options options = getCliOptions();
         CommandLineParser parser = new GnuParser();
+
+
+        int nodesAmount = 10;
+        ExecutorService threadpool = Executors.newFixedThreadPool(nodesAmount);
+
 
         try {
             CommandLine cmd = parser.parse(options, args);
@@ -31,7 +41,11 @@ public class Service {
                     System.exit(2);
                 }
 
-                Node.sendBeacon(cmd.getOptionValue("subscribe-uri"), cmd.getOptionValue("publish-uri"));
+                List<Node> nodes = new ArrayList<>();
+                for (int i = 0; i < nodesAmount; i++) {
+                    nodes.add(new Node(cmd.getOptionValue("subscribe-uri"), cmd.getOptionValue("publish-uri"), String.format("%03d", i)));
+                    threadpool.execute(nodes.get(i));
+                }
             } else {
                 printHelp(options);
                 System.exit(2);
@@ -45,6 +59,11 @@ public class Service {
     public static void printHelp(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("jnanomsg-service", options);
+    }
+
+    public static void spawnThreads() {
+
+
     }
 
     public static Options getCliOptions() {
